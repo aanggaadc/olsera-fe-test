@@ -7,6 +7,7 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import { Link } from 'react-router-dom'
 
 export default function ButtonAppBar() {
     return (
@@ -22,9 +23,12 @@ export default function ButtonAppBar() {
                     >
                         <MenuIcon />
                     </IconButton>
+
                     <Typography style={{ fontWeight: "600" }} variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         Homepage
                     </Typography>
+
+
                     <FavoriteIcon />
                     <MoreIcon />
                 </Toolbar>
