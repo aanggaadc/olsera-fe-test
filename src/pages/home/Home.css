@@ -6,7 +6,7 @@
     padding: 10px 10px;
 }
 
-.card {
+.card-post {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -14,8 +14,13 @@
     width: 100%;
     gap: 80px;
     padding: 10px 10px;
+    background: #fff;
 
 }
+
+.card-post:nth-child(even) {
+    background: #eee;
+  }
 
 .content h4 {
     margin: 0;

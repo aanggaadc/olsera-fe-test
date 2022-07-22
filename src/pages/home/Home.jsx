@@ -1,12 +1,11 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react'
-import Navbar from '../../components/NavbarMain'
+import NavbarMain from '../../components/NavbarMain';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import './Home.css'
 import { IconButton, Modal, Typography } from '@mui/material';
 import Axios from 'axios'
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
-import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 export default function Home() {
@@ -34,7 +33,7 @@ export default function Home() {
 
     const Card = ({ children, reference }) => {
         return (
-            <div ref={reference}>
+            <div className='card-post' ref={reference}>
                 {children}
             </div>
         );
@@ -109,60 +108,56 @@ export default function Home() {
 
     return (
         <>
-            <Navbar />
+            <NavbarMain />
             <div className='home-container'>
                 {posts.map((item, index) =>
                     index + 1 === posts.length ? (
                         <Card reference={lastItemRef} key={index}>
-                            <div className='card'>
-                                <div className='content'>
-                                    <h4 onClick={() => {
-                                        setPost({
-                                            title: item.title,
-                                            body: item.body
-                                        })
-                                        getComment(item.id)
-                                        setTimeout(() => {
-                                            handleOpen()
-                                        }, 500)
-                                    }}>{item.title}</h4>
-                                    <p>{item.body}</p>
-                                </div>
-                                <div className='button'>
-                                    <IconButton onClick={() => {
-                                        likePost(item.title, item.body)
-                                        toast.success(`You like ${item.title} posts`)
-                                    }}>
-                                        <FavoriteIcon sx={{ fontSize: 35, color: "pink" }} />
-                                    </IconButton>
-                                </div>
+                            <div className='content'>
+                                <h4 onClick={() => {
+                                    setPost({
+                                        title: item.title,
+                                        body: item.body
+                                    })
+                                    getComment(item.id)
+                                    setTimeout(() => {
+                                        handleOpen()
+                                    }, 500)
+                                }}>{item.title}</h4>
+                                <p>{item.body}</p>
+                            </div>
+                            <div className='button'>
+                                <IconButton onClick={() => {
+                                    likePost(item.title, item.body)
+                                    toast.success(`You like ${item.title} posts`)
+                                }}>
+                                    <FavoriteIcon sx={{ fontSize: 35, color: "pink" }} />
+                                </IconButton>
                             </div>
                         </Card>
 
                     ) : (
                         <Card key={index}>
-                            <div className='card'>
-                                <div className='content'>
-                                    <h4 style={{ cursor: "pointer" }} onClick={() => {
-                                        setPost({
-                                            title: item.title,
-                                            body: item.body
-                                        })
-                                        getComment(item.id)
-                                        setTimeout(() => {
-                                            handleOpen()
-                                        }, 500)
-                                    }}>{item.title}</h4>
-                                    <p>{item.body}</p>
-                                </div>
-                                <div className='button'>
-                                    <IconButton onClick={() => {
-                                        likePost(item.title, item.body)
-                                        toast.success(`You like ${item.title} posts`)
-                                    }}>
-                                        <FavoriteIcon sx={{ fontSize: 35, color: "pink" }} />
-                                    </IconButton>
-                                </div>
+                            <div className='content'>
+                                <h4 style={{ cursor: "pointer" }} onClick={() => {
+                                    setPost({
+                                        title: item.title,
+                                        body: item.body
+                                    })
+                                    getComment(item.id)
+                                    setTimeout(() => {
+                                        handleOpen()
+                                    }, 500)
+                                }}>{item.title}</h4>
+                                <p>{item.body}</p>
+                            </div>
+                            <div className='button'>
+                                <IconButton onClick={() => {
+                                    likePost(item.title, item.body)
+                                    toast.success(`You like ${item.title} posts`)
+                                }}>
+                                    <FavoriteIcon sx={{ fontSize: 35, color: "pink" }} />
+                                </IconButton>
                             </div>
                         </Card>
                     )
