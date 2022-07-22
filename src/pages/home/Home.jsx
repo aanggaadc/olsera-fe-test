@@ -2,11 +2,12 @@ import React, { useState, useEffect, useRef, useCallback } from 'react'
 import Navbar from '../../components/NavbarMain'
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import './Home.css'
-import { Button, Modal, Typography } from '@mui/material';
+import { IconButton, Modal, Typography } from '@mui/material';
 import Axios from 'axios'
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import { Link } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 export default function Home() {
     const [posts, setPosts] = useState([])
@@ -30,25 +31,6 @@ export default function Home() {
         setComment([])
         setOpen(false)
     };
-
-    const modalStyle = {
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        width: "400px",
-        height: "700px",
-        overflowY: "auto",
-        bgcolor: 'white',
-        border: '2px solid #000',
-        boxShadow: 24,
-        p: 4,
-    };
-
-    const commentStyle = {
-        padding: "10px 10px",
-        border: "0.5px solid gray"
-    }
 
     const Card = ({ children, reference }) => {
         return (
@@ -105,6 +87,21 @@ export default function Home() {
             })
     }
 
+    const likePost = (title, body) => {
+        if (localStorage.getItem('likedPost') === null) {
+            localStorage.setItem('likedPost', '[]')
+        }
+        const newLike = {
+            title: title,
+            body: body,
+        }
+
+        const dataLike = JSON.parse(localStorage.getItem('likedPost'))
+        dataLike.push(newLike)
+
+        localStorage.setItem('likedPost', JSON.stringify(dataLike))
+    }
+
     useEffect(() => {
         getPosts(pages)
         setPages((pages) => pages + 1)
@@ -132,9 +129,12 @@ export default function Home() {
                                     <p>{item.body}</p>
                                 </div>
                                 <div className='button'>
-                                    <Button>
+                                    <IconButton onClick={() => {
+                                        likePost(item.title, item.body)
+                                        toast.success(`You like ${item.title} posts`)
+                                    }}>
                                         <FavoriteIcon sx={{ fontSize: 35, color: "pink" }} />
-                                    </Button>
+                                    </IconButton>
                                 </div>
                             </div>
                         </Card>
@@ -156,9 +156,12 @@ export default function Home() {
                                     <p>{item.body}</p>
                                 </div>
                                 <div className='button'>
-                                    <Button>
+                                    <IconButton onClick={() => {
+                                        likePost(item.title, item.body)
+                                        toast.success(`You like ${item.title} posts`)
+                                    }}>
                                         <FavoriteIcon sx={{ fontSize: 35, color: "pink" }} />
-                                    </Button>
+                                    </IconButton>
                                 </div>
                             </div>
                         </Card>
@@ -174,7 +177,19 @@ export default function Home() {
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
-                <Box sx={modalStyle}>
+                <Box sx={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    width: "400px",
+                    height: "700px",
+                    overflowY: "auto",
+                    bgcolor: 'white',
+                    border: '2px solid #000',
+                    boxShadow: 24,
+                    p: 4
+                }}>
                     <Typography sx={{ fontWeight: "bold" }} id="modal-modal-title" variant="h6" component="h2">
                         {post.title}
                     </Typography>
@@ -183,13 +198,16 @@ export default function Home() {
                     </Typography>
 
                     <Typography id="modal-modal-comment" sx={{ mt: 5, fontWeight: "bold" }}>
-                        Comment
+                        Comments
                     </Typography>
-                    <Box sx={commentStyle}>
+                    <Box sx={{
+                        padding: "10px 10px",
+                        border: "0.5px solid gray"
+                    }}>
                         {comment.map((item, index) => {
                             return (
-                                <div key={index} style={{ marginBottom: "5px" }}>
-                                    <Typography variant='h6' component='h3'>
+                                <div key={index} style={{ marginBottom: "10px" }}>
+                                    <Typography sx={{ fontWeight: "bold" }}>
                                         {item.name}
                                     </Typography>
                                     <Typography>
