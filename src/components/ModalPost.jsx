@@ -11,9 +11,22 @@ import {
     IconButton
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
+import { useNavigate, useLocation, useParams } from 'react-router-dom'
 import { Formik, Form } from 'formik'
+import { useDispatch, useSelector } from "react-redux";
+import { bindActionCreators } from "redux";
+import { actionCreators } from "../store/index";
 
-export default function ModalPost({ openModalPost, handleClosePost, post }) {
+export default function ModalPost() {
+    const dispatch = useDispatch();
+    const navigate = useNavigate()
+    const location = useLocation()
+    const { id } = useParams()
+    const { clearPostData } = bindActionCreators(actionCreators, dispatch);
+    const { post } = useSelector((state) => {
+        return state;
+    });
+
     const style = {
         position: 'absolute',
         top: '50%',
@@ -26,15 +39,14 @@ export default function ModalPost({ openModalPost, handleClosePost, post }) {
 
     return (
         <Modal
-            open={openModalPost}
-            onClose={handleClosePost}
+            open={location.pathname === `/admin/create` || location.pathname === `/admin/posts/${id}/edit`}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
         >
             <Box sx={style}>
                 <AppBar position="static">
                     <Toolbar>
-                        {post.body === "" || post.title === "" ? <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                        {location.pathname === `/admin/create` ? <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                             Create Post
                         </Typography>
                             :
@@ -42,7 +54,10 @@ export default function ModalPost({ openModalPost, handleClosePost, post }) {
                                 Edit Post
                             </Typography>}
 
-                        <IconButton onClick={handleClosePost} >
+                        <IconButton onClick={() => {
+                            clearPostData()
+                            navigate(-1)
+                        }} >
                             <CloseIcon sx={{ color: "#fff" }} />
                         </IconButton>
                     </Toolbar>
