@@ -12,9 +12,8 @@ import {
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { Formik, Form } from 'formik'
-import Axios from 'axios'
 
-export default function ModalPost({ openModalPost, handleClosePost }) {
+export default function ModalPost({ openModalPost, handleClosePost, post }) {
     const style = {
         position: 'absolute',
         top: '50%',
@@ -35,9 +34,14 @@ export default function ModalPost({ openModalPost, handleClosePost }) {
             <Box sx={style}>
                 <AppBar position="static">
                     <Toolbar>
-                        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                        {post.body === "" || post.title === "" ? <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                             Create Post
                         </Typography>
+                            :
+                            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                                Edit Post
+                            </Typography>}
+
                         <IconButton onClick={handleClosePost} >
                             <CloseIcon sx={{ color: "#fff" }} />
                         </IconButton>
@@ -57,8 +61,8 @@ export default function ModalPost({ openModalPost, handleClosePost }) {
                     >
                         {({ handleSubmit, handleChange }) => (
                             <Form>
-                                <TextField sx={{ marginTop: "15px" }} fullWidth label="title" name='title' onChange={handleChange} required />
-                                <TextField sx={{ marginTop: "15px" }} fullWidth label="body" name='body' onChange={handleChange} required />
+                                <TextField sx={{ marginTop: "15px" }} fullWidth label="title" value={post.title} name='title' onChange={handleChange} required />
+                                <TextField sx={{ marginTop: "15px" }} fullWidth label="body" value={post.body} name='body' onChange={handleChange} required />
 
                                 <Grid container sx={{ display: "flex", flexDirection: "row", justifyContent: "flex-end", gap: "10px", marginTop: "100px" }}>
                                     <Button onClick={handleSubmit} style={{

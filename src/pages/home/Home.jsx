@@ -126,14 +126,12 @@ export default function Home() {
                                 }}>{item.title}</h4>
                                 <p>{item.body}</p>
                             </div>
-                            <div className='button'>
-                                <IconButton onClick={() => {
-                                    likePost(item.title, item.body)
-                                    toast.success(`You like ${item.title} posts`)
-                                }}>
-                                    <FavoriteIcon sx={{ fontSize: 35, color: "pink" }} />
-                                </IconButton>
-                            </div>
+                            <IconButton onClick={() => {
+                                likePost(item.title, item.body)
+                                toast.success(`You like ${item.title} posts`)
+                            }}>
+                                <FavoriteIcon sx={{ fontSize: 35, color: "pink" }} />
+                            </IconButton>
                         </Card>
 
                     ) : (
@@ -151,14 +149,12 @@ export default function Home() {
                                 }}>{item.title}</h4>
                                 <p>{item.body}</p>
                             </div>
-                            <div className='button'>
-                                <IconButton onClick={() => {
-                                    likePost(item.title, item.body)
-                                    toast.success(`You like ${item.title} posts`)
-                                }}>
-                                    <FavoriteIcon sx={{ fontSize: 35, color: "pink" }} />
-                                </IconButton>
-                            </div>
+                            <IconButton onClick={() => {
+                                likePost(item.title, item.body)
+                                toast.success(`You like ${item.title} posts`)
+                            }}>
+                                <FavoriteIcon sx={{ fontSize: 35, color: "pink" }} />
+                            </IconButton>
                         </Card>
                     )
                 )}

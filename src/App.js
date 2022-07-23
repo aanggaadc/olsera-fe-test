@@ -7,7 +7,7 @@ import Admin from "./pages/admin/Admin"
 import LikedPosts from './pages/like_post/LikedPosts'
 import PrivateRoutes from './routes/PrivateRoutes'
 import {ToastContainer} from 'react-toastify'
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 import { bindActionCreators } from "redux"
 import { actionCreators } from "./store/index"
 
@@ -20,6 +20,7 @@ function App() {
       fillUser(JSON.parse(localStorage.getItem("authData")))
     }
   })
+  
   return (
     <>
     <Routes>

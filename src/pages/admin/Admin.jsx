@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react'
+import React, { useState, useEffect } from 'react'
 import NavbarMain from '../../components/NavbarMain';
-import { Modal, Typography, IconButton, Box } from '@mui/material';
+import { Modal, Typography, IconButton, Box, Button } from '@mui/material';
 import Axios from 'axios'
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import ModalPost from '../../components/ModalPost'
@@ -31,7 +31,13 @@ export default function Admin() {
     // MODAL CREATE & EDIT POST
     const [openModalPost, setOpenModalPost] = useState(false);
     const handleOpenPost = () => setOpenModalPost(true);
-    const handleClosePost = () => setOpenModalPost(false);
+    const handleClosePost = () => {
+        setOpenModalPost(false)
+        setPost({
+            title: "",
+            body: ""
+        })
+    }
 
     const Card = ({ children }) => {
         return (
@@ -82,6 +88,16 @@ export default function Admin() {
                                 }}>{item.title}</h4>
                                 <p>{item.body}</p>
                             </div>
+                            <Button variant="contained" color='primary'
+                                onClick={() => {
+                                    setPost({
+                                        title: item.title,
+                                        body: item.body
+                                    })
+                                    handleOpenPost()
+                                }}>
+                                Edit
+                            </Button>
                         </Card>
 
                     ) : (
@@ -99,6 +115,16 @@ export default function Admin() {
                                 }}>{item.title}</h4>
                                 <p>{item.body}</p>
                             </div>
+                            <Button variant="contained" color='primary'
+                                onClick={() => {
+                                    setPost({
+                                        title: item.title,
+                                        body: item.body
+                                    })
+                                    handleOpenPost()
+                                }}>
+                                Edit
+                            </Button>
                         </Card>
                     )
                 )}
@@ -156,7 +182,7 @@ export default function Admin() {
                 </Box>
             </Modal>
 
-            <ModalPost openModalPost={openModalPost} handleClosePost={handleClosePost} />
+            <ModalPost openModalPost={openModalPost} handleClosePost={handleClosePost} post={post} />
         </>
     )
 }

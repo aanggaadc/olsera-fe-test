@@ -6,7 +6,7 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { Link, useLocation } from 'react-router-dom'
 import { Button, AppBar, Box, Toolbar, Typography, IconButton } from '@mui/material';
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
 import { actionCreators } from "../store/index";
 
