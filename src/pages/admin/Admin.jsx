@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react'
 import NavbarMain from '../../components/NavbarMain';
-import { Modal, Typography } from '@mui/material';
+import { Modal, Typography, IconButton, Box } from '@mui/material';
 import Axios from 'axios'
-import CircularProgress from '@mui/material/CircularProgress';
-import Box from '@mui/material/Box';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import ModalPost from '../../components/ModalPost'
 
 export default function Admin() {
     const userData = JSON.parse(localStorage.getItem('authData'))
@@ -14,12 +14,10 @@ export default function Admin() {
         body: ""
     })
     const [comment, setComment] = useState([])
-    const [isLoading, setIsLoading] = useState(false)
-    const [hasMore, setHasMore] = useState(true)
     const [pages, setPages] = useState(1)
-    const observer = useRef()
-    const TOTAL_PAGES = 10
     const [open, setOpen] = useState(false);
+
+    //MODAL VIEW POST
     const handleOpen = () => setOpen(true);
     const handleClose = () => {
         setPost({
@@ -30,7 +28,12 @@ export default function Admin() {
         setOpen(false)
     };
 
-    const Card = ({ children, reference }) => {
+    // MODAL CREATE & EDIT POST
+    const [openModalPost, setOpenModalPost] = useState(false);
+    const handleOpenPost = () => setOpenModalPost(true);
+    const handleClosePost = () => setOpenModalPost(false);
+
+    const Card = ({ children }) => {
         return (
             <div className='card-post'>
                 {children}
@@ -39,13 +42,11 @@ export default function Admin() {
     };
 
     const getPosts = async (page) => {
-        setIsLoading(true)
         await new Promise((resolve) => setTimeout(resolve, 1000))
 
         await Axios.get(`https://jsonplaceholder.typicode.com/posts?_page=${page}&_limit=10)`)
             .then(response => {
                 setPosts([...posts, ...response.data])
-                setIsLoading(false)
             })
     }
 
@@ -102,6 +103,9 @@ export default function Admin() {
                     )
                 )}
             </div>
+            <IconButton sx={{ zIndex: 1, position: "fixed", bottom: 0, right: '10px' }} onClick={handleOpenPost}>
+                <AddCircleIcon color='primary' sx={{ fontSize: 50 }} />
+            </IconButton>
 
             <Modal
                 open={open}
@@ -151,6 +155,8 @@ export default function Admin() {
                     </Box>
                 </Box>
             </Modal>
+
+            <ModalPost openModalPost={openModalPost} handleClosePost={handleClosePost} />
         </>
     )
 }

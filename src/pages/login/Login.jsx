@@ -12,7 +12,6 @@ import { Formik, Form } from 'formik'
 import { toast } from 'react-toastify'
 import Axios from 'axios'
 
-
 const style = {
     position: 'absolute',
     top: '50%',
@@ -47,7 +46,7 @@ export default function Login() {
                                 .then((response) => {
                                     const apiData = response.data
                                     if (apiData.email === values.email) {
-                                        navigate('/')
+                                        navigate('/admin')
                                         localStorage.setItem('authData', JSON.stringify(apiData))
                                         toast.success("You're Succesfully Login")
                                     } else {
