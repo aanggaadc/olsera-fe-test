@@ -1,7 +1,5 @@
 import React from 'react'
 import NavbarMain from '../../components/NavbarMain';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import { IconButton, Modal, Typography, Box } from '@mui/material';
 
 export default function LikedPosts() {
     const posts = JSON.parse(localStorage.getItem('likedPost'))
@@ -16,14 +14,7 @@ export default function LikedPosts() {
                             <h4 >{item.title}</h4>
                             <p>{item.body}</p>
                         </div>
-                        <div className='button'>
-                            <IconButton disabled>
-                                <FavoriteIcon sx={{ fontSize: 35, color: "pink" }} />
-                            </IconButton>
-                        </div>
                     </div>
-
-
                 )}
             </div>
 

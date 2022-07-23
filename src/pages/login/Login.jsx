@@ -11,6 +11,9 @@ import {
 import { Formik, Form } from 'formik'
 import { toast } from 'react-toastify'
 import Axios from 'axios'
+import { useDispatch } from "react-redux";
+import { bindActionCreators } from "redux";
+import { actionCreators } from "../../store/index";
 
 const style = {
     position: 'absolute',
@@ -25,6 +28,9 @@ const style = {
 
 export default function Login() {
     const navigate = useNavigate()
+    const dispatch = useDispatch();
+    const { fillUser } = bindActionCreators(actionCreators, dispatch);
+
     return (
         <>
             <Modal
@@ -47,6 +53,7 @@ export default function Login() {
                                     const apiData = response.data
                                     if (apiData.email === values.email) {
                                         navigate('/admin')
+                                        fillUser(response.data)
                                         localStorage.setItem('authData', JSON.stringify(apiData))
                                         toast.success("You're Succesfully Login")
                                     } else {

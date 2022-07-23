@@ -6,13 +6,19 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { Link, useLocation } from 'react-router-dom'
 import { Button, AppBar, Box, Toolbar, Typography, IconButton } from '@mui/material';
+import { useDispatch, useSelector } from "react-redux";
+import { bindActionCreators } from "redux";
+import { actionCreators } from "../store/index";
 
 export default function NavbarMain() {
     const navigate = useNavigate()
     const location = useLocation()
     const authData = localStorage.getItem('authData')
+    const dispatch = useDispatch();
+    const { clearUser } = bindActionCreators(actionCreators, dispatch);
 
     const handleLogout = () => {
+        clearUser()
         toast.success("You are logged out, see ya!!");
         localStorage.removeItem("authData");
         navigate('/login')
@@ -35,6 +41,7 @@ export default function NavbarMain() {
                     <Typography style={{ fontWeight: "600" }} variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         {location.pathname === `/admin` && <Link style={{ textDecoration: "none", color: "#fff" }} to='/admin'>Admin</Link>}
                         {location.pathname === '/' && <Link style={{ textDecoration: "none", color: "#fff" }} to='/'>Homepage</Link>}
+                        {location.pathname === '/liked-posts' && <Link style={{ textDecoration: "none", color: "#fff" }} to='/liked-posts'>Liked Post</Link>}
                     </Typography>
                     {authData && <Button onClick={handleLogout} style={{
                         backgroundColor: "red",
