@@ -24,6 +24,16 @@ export default function NavbarMain() {
         navigate('/login')
     };
 
+    const NavTitle = () => {
+        if (location.pathname === '/') {
+            return <Link style={{ textDecoration: "none", color: "#fff" }} to='/'>Homepage</Link>
+        } else if (location.pathname === '/liked-posts') {
+            return <Link style={{ textDecoration: "none", color: "#fff" }} to='/liked-posts'>Liked Post</Link>
+        } else {
+            return <Link style={{ textDecoration: "none", color: "#fff" }} to='/admin'>Admin</Link>
+        }
+    }
+
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">
@@ -39,9 +49,7 @@ export default function NavbarMain() {
                     </IconButton>
 
                     <Typography style={{ fontWeight: "600" }} variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                        {location.pathname === `/admin` && <Link style={{ textDecoration: "none", color: "#fff" }} to='/admin'>Admin</Link>}
-                        {location.pathname === '/' && <Link style={{ textDecoration: "none", color: "#fff" }} to='/'>Homepage</Link>}
-                        {location.pathname === '/liked-posts' && <Link style={{ textDecoration: "none", color: "#fff" }} to='/liked-posts'>Liked Post</Link>}
+                        <NavTitle />
                     </Typography>
                     {authData && <Button onClick={handleLogout} style={{
                         backgroundColor: "red",

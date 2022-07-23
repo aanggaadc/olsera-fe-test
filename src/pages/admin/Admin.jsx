@@ -21,10 +21,10 @@ export default function Admin() {
     })
     const [comment, setComment] = useState([])
     const [pages, setPages] = useState(1)
-    const [open, setOpen] = useState(false);
     const { setPostData } = bindActionCreators(actionCreators, dispatch);
 
     //MODAL VIEW POST
+    const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => {
         setPost({
@@ -35,16 +35,10 @@ export default function Admin() {
         setOpen(false)
     };
 
-    // MODAL CREATE & EDIT POST
-    const [openModalPost, setOpenModalPost] = useState(false);
-    const handleOpenPost = () => setOpenModalPost(true);
-    const handleClosePost = () => {
-        setOpenModalPost(false)
-        setPost({
-            title: "",
-            body: ""
-        })
-    }
+    // MODAL DELETE
+    const [openDeleteModal, setOpenDeleteModal] = useState(false);
+    const handleOpenDeleteModal = () => setOpenDeleteModal(true);
+    const handleCloseDeleteModal = () => setOpenDeleteModal(false);
 
     const Card = ({ children }) => {
         return (
@@ -94,22 +88,28 @@ export default function Admin() {
                             }}>{item.title}</h4>
                             <p>{item.body}</p>
                         </div>
-                        <Link style={{ textDecoration: "none" }} to={`/admin/posts/${item.id}/edit`} state={{ background: location }}>
-                            <Button variant="contained" color='primary'
-                                onClick={() => {
-                                    setPost({
-                                        title: item.title,
-                                        body: item.body
-                                    })
-                                    setPostData(item)
-                                    handleOpenPost()
-                                }}>
-                                Edit
+                        <div style={{ display: "flex", flexDirection: "row", gap: "10px" }}>
+                            <Link style={{ textDecoration: "none" }} to={`/admin/posts/${item.id}/edit`} state={{ background: location }}>
+                                <Button variant="contained" color='primary'
+                                    onClick={() => {
+                                        setPost({
+                                            title: item.title,
+                                            body: item.body
+                                        })
+                                        setPostData(item)
+                                    }}>
+                                    Edit
+                                </Button>
+                            </Link>
+                            <Button sx={{ backgroundColor: "red" }} variant="contained" onClick={handleOpenDeleteModal}>
+                                Delete
                             </Button>
-                        </Link>
+                        </div>
+
                     </Card>
                 )}
             </div>
+
             <Link to='/admin/create' state={{ background: location }}>
                 <IconButton sx={{ zIndex: 1, position: "fixed", bottom: 0, right: '10px' }} >
                     <AddCircleIcon color='primary' sx={{ fontSize: 50 }} />
@@ -117,6 +117,8 @@ export default function Admin() {
             </Link>
 
             <Outlet />
+
+            {/* MODAL VIEW */}
             <Modal
                 open={open}
                 onClose={handleClose}
@@ -166,7 +168,49 @@ export default function Admin() {
                 </Box>
             </Modal>
 
-            <ModalPost openModalPost={openModalPost} handleClosePost={handleClosePost} />
+            {/* MODAL CREATE & EDIT */}
+            <ModalPost openModalPost />
+
+            {/* MODAL DELETE */}
+            <Modal
+                open={openDeleteModal}
+                onClose={handleCloseDeleteModal}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box sx={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    width: "400px",
+                    bgcolor: 'white',
+                    border: 'none',
+                    boxShadow: 24,
+                    p: 4
+                }}>
+                    <Typography sx={{ fontWeight: "bold" }} id="modal-modal-title" variant="h6" component="h2">
+                        Delete Post
+                    </Typography>
+                    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                        Are you sure delete this post?
+                    </Typography>
+
+                    <Box sx={{
+                        display: "flex",
+                        flexDirection: "row",
+                        gap: '10px',
+                        marginTop: "20px"
+                    }}>
+                        <Button sx={{ backgroundColor: "red" }} variant='contained' onClick={handleCloseDeleteModal}>
+                            Yes
+                        </Button>
+                        <Button sx={{ backgroundColor: "gray" }} variant='contained' onClick={handleCloseDeleteModal}>
+                            No
+                        </Button>
+                    </Box>
+                </Box>
+            </Modal>
         </>
     )
 }
