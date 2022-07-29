@@ -48,7 +48,7 @@ export default function Login() {
                             email: ""
                         }}
                         onSubmit={(values) => {
-                            Axios.get(`https://jsonplaceholder.typicode.com/users/${values.id}`)
+                            Axios.get(`users/${values.id}`)
                                 .then((response) => {
                                     const apiData = response.data
                                     if (apiData.email === values.email) {

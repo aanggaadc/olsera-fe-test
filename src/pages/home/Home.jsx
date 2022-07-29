@@ -72,7 +72,7 @@ export default function Home() {
         setIsLoading(true)
         await new Promise((resolve) => setTimeout(resolve, 1000))
 
-        await Axios.get(`https://jsonplaceholder.typicode.com/posts?_page=${page}&_limit=10)`)
+        await Axios.get(`/posts?_page=${page}&_limit=10)`)
             .then(response => {
                 setPosts([...posts, ...response.data])
                 setIsLoading(false)
@@ -80,7 +80,7 @@ export default function Home() {
     }
 
     const getComment = (id) => {
-        Axios.get(`https://jsonplaceholder.typicode.com/comments?postId=${id}`)
+        Axios.get(`comments?postId=${id}`)
             .then(response => {
                 setComment(response.data)
             })

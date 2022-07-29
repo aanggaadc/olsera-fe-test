@@ -1,21 +1,44 @@
 import React from 'react'
 import NavbarMain from '../../components/NavbarMain';
+import {IconButton} from '@mui/material'
+import NotInterestedIcon from '@mui/icons-material/NotInterested';
 
 export default function LikedPosts() {
     const posts = JSON.parse(localStorage.getItem('likedPost'))
+    
+    console.log(posts)
+
+    const unlikePost = (title) => {
+        const filterPost = posts.filter(item => item.title !== title)
+
+        posts.push(filterPost)
+
+        // const dataLike = JSON.parse(localStorage.getItem('likedPost'))
+        // dataLike.push(filterPost)
+
+        // localStorage.setItem('likedPost', JSON.stringify(dataLike))
+    }
 
     return (
         <>
             <NavbarMain />
             <div className='home-container'>
-                {posts.map((item, index) =>
+                {posts ? posts.map((item, index) =>
                     <div key={index} className='card-post'>
                         <div className='content'>
                             <h4 >{item.title}</h4>
                             <p>{item.body}</p>
                         </div>
+                        <IconButton onClick={() => {
+                                unlikePost(item.title)
+                            }}>
+                                <NotInterestedIcon sx={{ fontSize: 35, color: "red" }} />
+                            </IconButton>
                     </div>
-                )}
+                    
+                ) :
+                <h1 style={{textAlign: "center"}}>No post liked yet</h1>
+            }
             </div>
 
             {/* <Modal
