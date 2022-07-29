@@ -1,22 +1,16 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import NavbarMain from '../../components/NavbarMain';
 import {IconButton} from '@mui/material'
-import NotInterestedIcon from '@mui/icons-material/NotInterested';
+import DeleteIcon from '@mui/icons-material/Delete';
+import {toast} from 'react-toastify'
 
 export default function LikedPosts() {
     const posts = JSON.parse(localStorage.getItem('likedPost'))
     
-    console.log(posts)
-
-    const unlikePost = (title) => {
-        const filterPost = posts.filter(item => item.title !== title)
-
-        posts.push(filterPost)
-
-        // const dataLike = JSON.parse(localStorage.getItem('likedPost'))
-        // dataLike.push(filterPost)
-
-        // localStorage.setItem('likedPost', JSON.stringify(dataLike))
+    const unlikePost = (id) => {
+        const filterPost = posts.filter(item => item.id !== id)
+        localStorage.setItem('likedPost', JSON.stringify(filterPost))
+        window.location.reload()        
     }
 
     return (
@@ -30,9 +24,9 @@ export default function LikedPosts() {
                             <p>{item.body}</p>
                         </div>
                         <IconButton onClick={() => {
-                                unlikePost(item.title)
+                                unlikePost(item.id)
                             }}>
-                                <NotInterestedIcon sx={{ fontSize: 35, color: "red" }} />
+                                <DeleteIcon sx={{ fontSize: 35, color: "red" }} />
                             </IconButton>
                     </div>
                     

@@ -86,11 +86,12 @@ export default function Home() {
             })
     }
 
-    const likePost = (title, body) => {
+    const likePost = (id, title, body) => {
         if (localStorage.getItem('likedPost') === null) {
             localStorage.setItem('likedPost', '[]')
         }
         const newLike = {
+            id: id,
             title: title,
             body: body,
         }
@@ -127,7 +128,7 @@ export default function Home() {
                                 <p>{item.body}</p>
                             </div>
                             <IconButton onClick={() => {
-                                likePost(item.title, item.body)
+                                likePost(item.id, item.title, item.body)
                                 toast.success(`You like ${item.title} posts`)
                             }}>
                                 <FavoriteIcon sx={{ fontSize: 35, color: "pink" }} />
@@ -150,7 +151,7 @@ export default function Home() {
                                 <p>{item.body}</p>
                             </div>
                             <IconButton onClick={() => {
-                                likePost(item.title, item.body)
+                                likePost(item.id, item.title, item.body)
                                 toast.success(`You like ${item.title} posts`)
                             }}>
                                 <FavoriteIcon sx={{ fontSize: 35, color: "pink" }} />
