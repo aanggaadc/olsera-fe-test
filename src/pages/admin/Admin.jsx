@@ -16,7 +16,7 @@ export default function Admin({ getComment }) {
   const [posts, setPosts] = useState([]);
   const adminPosts = posts.filter((item) => item.userId === userData.id);
   const [pages, setPages] = useState(1);
-  const { setPostData, setCommentData } = bindActionCreators(actionCreators, dispatch);
+  const { setPostData } = bindActionCreators(actionCreators, dispatch);
 
   // MODAL DELETE
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
@@ -42,7 +42,7 @@ export default function Admin({ getComment }) {
 
   return (
     <>
-      <NavbarMain />
+      <NavbarMain title="Admin" />
       <div className="home-container">
         {adminPosts.map((item, index) => (
           <Card key={index}>

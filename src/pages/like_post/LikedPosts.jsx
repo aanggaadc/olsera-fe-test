@@ -22,7 +22,7 @@ export default function LikedPosts({ getComment }) {
 
     return (
         <>
-            <NavbarMain />
+            <NavbarMain title="Liked Posts" />
             <div className='home-container'>
                 {posts ? posts.map((item, index) =>
                     <div key={index} className='card-post'>

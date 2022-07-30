@@ -21,7 +21,7 @@ export default function Home({ getComment }) {
     const [pages, setPages] = useState(1)
     const observer = useRef()
     const TOTAL_PAGES = 10
-    const { setPostData, setCommentData } = bindActionCreators(actionCreators, dispatch);
+    const { setPostData } = bindActionCreators(actionCreators, dispatch);
 
     const Card = ({ children, reference }) => {
         return (
@@ -94,7 +94,7 @@ export default function Home({ getComment }) {
 
     return (
         <>
-            <NavbarMain />
+            <NavbarMain title="Home" />
             <div className='home-container'>
                 {posts.map((item, index) =>
                     index + 1 === posts.length ? (

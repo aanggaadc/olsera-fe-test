@@ -10,7 +10,7 @@ import { useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
 import { actionCreators } from "../store/index";
 
-export default function NavbarMain() {
+export default function NavbarMain({ title }) {
     const navigate = useNavigate()
     const location = useLocation()
     const authData = localStorage.getItem('authData')
@@ -23,16 +23,6 @@ export default function NavbarMain() {
         localStorage.removeItem("authData");
         navigate('/login')
     };
-
-    const NavTitle = () => {
-        if (location.pathname === '/') {
-            return <Link style={{ textDecoration: "none", color: "#fff" }} to='/'>Homepage</Link>
-        } else if (location.pathname === '/liked-posts') {
-            return <Link style={{ textDecoration: "none", color: "#fff" }} to='/liked-posts'>Liked Post</Link>
-        } else {
-            return <Link style={{ textDecoration: "none", color: "#fff" }} to='/admin'>Admin</Link>
-        }
-    }
 
     return (
         <Box sx={{ flexGrow: 1 }}>
@@ -49,7 +39,7 @@ export default function NavbarMain() {
                     </IconButton>
 
                     <Typography style={{ fontWeight: "600" }} variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                        <NavTitle />
+                        {title}
                     </Typography>
                     {authData && <Button onClick={handleLogout} style={{
                         backgroundColor: "red",
