@@ -19,7 +19,7 @@ export const clearUser = () => {
 export const setPostData = (data) => {
     return (dispatch) => {
         dispatch({
-            type: "fill",
+            type: "fillPosts",
             payload: data
         })
     }
@@ -28,7 +28,25 @@ export const setPostData = (data) => {
 export const clearPostData = () => {
     return (dispatch) => {
         dispatch({
-            type: "clear",
+            type: "clearPosts",
+            payload: null
+        })
+    }
+}
+
+export const setCommentData = (data) => {
+    return (dispatch) => {
+        dispatch({
+            type: "fillComment",
+            payload: data
+        })
+    }
+}
+
+export const clearCommentData = () => {
+    return (dispatch) => {
+        dispatch({
+            type: "clearComment",
             payload: null
         })
     }

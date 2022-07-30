@@ -21,29 +21,26 @@ export default function ModalPost() {
     const dispatch = useDispatch();
     const navigate = useNavigate()
     const location = useLocation()
-    const { id } = useParams()
     const { clearPostData } = bindActionCreators(actionCreators, dispatch);
     const { post } = useSelector((state) => {
         return state;
     });
 
-    const style = {
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        width: 500,
-        bgcolor: 'white',
-        boxShadow: 24,
-    };
-
     return (
         <Modal
-            open={location.pathname === `/admin/create` || location.pathname === `/admin/posts/${id}/edit`}
+            open={true}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
         >
-            <Box sx={style}>
+            <Box sx={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                width: 500,
+                bgcolor: 'white',
+                boxShadow: 24,
+            }}>
                 <AppBar position="static">
                     <Toolbar>
                         {location.pathname === `/admin/create` ? <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>

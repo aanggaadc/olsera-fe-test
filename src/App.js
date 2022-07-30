@@ -5,6 +5,7 @@ import Home from './pages/home/Home'
 import Login from './pages/login/Login'
 import Admin from "./pages/admin/Admin"
 import ModalPost from "./components/ModalPost"
+import ModalView from './components/ModalView'
 import LikedPosts from './pages/like_post/LikedPosts'
 import PrivateRoutes from './routes/PrivateRoutes'
 import {ToastContainer} from 'react-toastify'
@@ -30,6 +31,7 @@ function App() {
       <Route path='/'>
         <Route index element={<Home />} />
         <Route path="login" element={<Login />} />
+        <Route path="posts/:id" element={<ModalView />} />
         <Route element={<PrivateRoutes />}>
           <Route path='admin'>
             <Route index element={<Admin />} />
@@ -42,6 +44,7 @@ function App() {
     </Routes>
     {background && (
         <Routes>
+          <Route path="/posts/:id" element={<ModalView />} />
           <Route path="/admin/create" element={<ModalPost />} />
           <Route path="/admin/posts/:id/edit" element={<ModalPost />} />
         </Routes>

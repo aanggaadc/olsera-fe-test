@@ -3,12 +3,12 @@ const reducer = (state = {
     body: ""
 }, action) => {
     switch (action.type) {
-        case "fill":
+        case "fillPosts":
             return {
                 title: action.payload.title,
                 body: action.payload.body
             }
-        case "clear":
+        case "clearPosts":
             return {
                 title: "",
                 body: ""

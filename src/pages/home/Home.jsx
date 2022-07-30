@@ -1,35 +1,26 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react'
+import { Link } from 'react-router-dom'
 import NavbarMain from '../../components/NavbarMain';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import './Home.css'
-import { IconButton, Modal, Typography } from '@mui/material';
+import { IconButton } from '@mui/material';
 import Axios from 'axios'
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import { toast } from 'react-toastify'
+import { useDispatch } from "react-redux";
+import { bindActionCreators } from "redux";
+import { actionCreators } from "../../store/index";
 
 export default function Home() {
+    const dispatch = useDispatch();
     const [posts, setPosts] = useState([])
-    const [post, setPost] = useState({
-        title: "",
-        body: ""
-    })
-    const [comment, setComment] = useState([])
     const [isLoading, setIsLoading] = useState(false)
     const [hasMore, setHasMore] = useState(true)
     const [pages, setPages] = useState(1)
     const observer = useRef()
     const TOTAL_PAGES = 10
-    const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => {
-        setPost({
-            title: "",
-            body: ""
-        })
-        setComment([])
-        setOpen(false)
-    };
+    const { setPostData, setCommentData } = bindActionCreators(actionCreators, dispatch);
 
     const Card = ({ children, reference }) => {
         return (
@@ -82,7 +73,7 @@ export default function Home() {
     const getComment = (id) => {
         Axios.get(`comments?postId=${id}`)
             .then(response => {
-                setComment(response.data)
+                setCommentData(response.data)
             })
     }
 
@@ -115,16 +106,12 @@ export default function Home() {
                     index + 1 === posts.length ? (
                         <Card reference={lastItemRef} key={index}>
                             <div className='content'>
-                                <h4 onClick={() => {
-                                    setPost({
-                                        title: item.title,
-                                        body: item.body
-                                    })
-                                    getComment(item.id)
-                                    setTimeout(() => {
-                                        handleOpen()
-                                    }, 500)
-                                }}>{item.title}</h4>
+                                <Link style={{ textDecoration: "none" }} to={`/posts/${item.id}`}>
+                                    <h4 style={{ cursor: "pointer" }} onClick={() => {
+                                        setPostData(item)
+                                        getComment(item.id)
+                                    }}>{item.title}</h4>
+                                </Link>
                                 <p>{item.body}</p>
                             </div>
                             <IconButton onClick={() => {
@@ -138,16 +125,12 @@ export default function Home() {
                     ) : (
                         <Card key={index}>
                             <div className='content'>
-                                <h4 style={{ cursor: "pointer" }} onClick={() => {
-                                    setPost({
-                                        title: item.title,
-                                        body: item.body
-                                    })
-                                    getComment(item.id)
-                                    setTimeout(() => {
-                                        handleOpen()
-                                    }, 500)
-                                }}>{item.title}</h4>
+                                <Link style={{ textDecoration: "none" }} to={`/posts/${item.id}`}>
+                                    <h4 style={{ cursor: "pointer" }} onClick={() => {
+                                        setPostData(item)
+                                        getComment(item.id)
+                                    }}>{item.title}</h4>
+                                </Link>
                                 <p>{item.body}</p>
                             </div>
                             <IconButton onClick={() => {
@@ -162,55 +145,6 @@ export default function Home() {
 
                 {isLoading && <Loader />}
             </div>
-
-            <Modal
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
-                <Box sx={{
-                    position: 'absolute',
-                    top: '50%',
-                    left: '50%',
-                    transform: 'translate(-50%, -50%)',
-                    width: "400px",
-                    height: "700px",
-                    overflowY: "auto",
-                    bgcolor: 'white',
-                    border: '2px solid #000',
-                    boxShadow: 24,
-                    p: 4
-                }}>
-                    <Typography sx={{ fontWeight: "bold" }} id="modal-modal-title" variant="h6" component="h2">
-                        {post.title}
-                    </Typography>
-                    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                        {post.body}
-                    </Typography>
-
-                    <Typography id="modal-modal-comment" sx={{ mt: 5, fontWeight: "bold" }}>
-                        Comments
-                    </Typography>
-                    <Box sx={{
-                        padding: "10px 10px",
-                        border: "0.5px solid gray"
-                    }}>
-                        {comment.map((item, index) => {
-                            return (
-                                <div key={index} style={{ marginBottom: "10px" }}>
-                                    <Typography sx={{ fontWeight: "bold" }}>
-                                        {item.name}
-                                    </Typography>
-                                    <Typography>
-                                        {item.body}
-                                    </Typography>
-                                </div>
-                            )
-                        })}
-                    </Box>
-                </Box>
-            </Modal>
         </>
     )
 }

@@ -1,16 +1,16 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import NavbarMain from '../../components/NavbarMain';
-import {IconButton} from '@mui/material'
+import { IconButton } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete';
-import {toast} from 'react-toastify'
+// import { toast } from 'react-toastify'
 
 export default function LikedPosts() {
     const posts = JSON.parse(localStorage.getItem('likedPost'))
-    
+
     const unlikePost = (id) => {
         const filterPost = posts.filter(item => item.id !== id)
         localStorage.setItem('likedPost', JSON.stringify(filterPost))
-        window.location.reload()        
+        window.location.reload()
     }
 
     return (
@@ -24,15 +24,15 @@ export default function LikedPosts() {
                             <p>{item.body}</p>
                         </div>
                         <IconButton onClick={() => {
-                                unlikePost(item.id)
-                            }}>
-                                <DeleteIcon sx={{ fontSize: 35, color: "red" }} />
-                            </IconButton>
+                            unlikePost(item.id)
+                        }}>
+                            <DeleteIcon sx={{ fontSize: 35, color: "red" }} />
+                        </IconButton>
                     </div>
-                    
+
                 ) :
-                <h1 style={{textAlign: "center"}}>No post liked yet</h1>
-            }
+                    <h1 style={{ textAlign: "center" }}>No post liked yet</h1>
+                }
             </div>
 
             {/* <Modal
