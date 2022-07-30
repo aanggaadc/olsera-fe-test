@@ -9,7 +9,7 @@ import { useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
 import { actionCreators } from "../../store/index";
 
-export default function Admin() {
+export default function Admin({ getComment }) {
   const location = useLocation();
   const dispatch = useDispatch();
   const userData = JSON.parse(localStorage.getItem("authData"));
@@ -32,12 +32,6 @@ export default function Admin() {
 
     await Axios.get(`posts?_page=${page}&_limit=10)`).then((response) => {
       setPosts([...posts, ...response.data]);
-    });
-  };
-
-  const getComment = (id) => {
-    Axios.get(`comments?postId=${id}`).then((response) => {
-      setCommentData(response.data);
     });
   };
 

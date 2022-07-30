@@ -12,7 +12,7 @@ import { useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
 import { actionCreators } from "../../store/index";
 
-export default function Home() {
+export default function Home({ getComment }) {
     const dispatch = useDispatch();
     const location = useLocation()
     const [posts, setPosts] = useState([])
@@ -68,13 +68,6 @@ export default function Home() {
             .then(response => {
                 setPosts([...posts, ...response.data])
                 setIsLoading(false)
-            })
-    }
-
-    const getComment = (id) => {
-        Axios.get(`comments?postId=${id}`)
-            .then(response => {
-                setCommentData(response.data)
             })
     }
 
