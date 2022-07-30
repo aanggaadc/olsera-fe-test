@@ -1,5 +1,5 @@
 import React from 'react'
-import { useNavigate, useLocation, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import {
     Modal,
     Typography,
@@ -19,6 +19,7 @@ export default function ModalView() {
     const { post, comment } = useSelector((state) => {
         return state;
     });
+    const comments = comment.data
 
     return (
         <Modal
@@ -63,7 +64,7 @@ export default function ModalView() {
                     padding: "10px 10px",
                     border: "0.5px solid gray"
                 }}>
-                    {comment.state.map((item, index) => {
+                    {comments.map((item, index) => {
                         return (
                             <div key={index} style={{ marginBottom: "10px" }}>
                                 <Typography sx={{ fontWeight: "bold" }}>

@@ -31,12 +31,9 @@ function App() {
       <Route path='/'>
         <Route index element={<Home />} />
         <Route path="login" element={<Login />} />
-        <Route path="posts/:id" element={<ModalView />} />
         <Route element={<PrivateRoutes />}>
           <Route path='admin'>
             <Route index element={<Admin />} />
-            <Route path="create" element={<ModalPost />} />
-            <Route path="posts/:id/edit" element={<ModalPost />} />
           </Route>
         </Route>        
         <Route path="/liked-posts" element={<LikedPosts />} />

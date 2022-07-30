@@ -3,8 +3,7 @@ import NavbarMain from "../../components/NavbarMain";
 import { Modal, Typography, IconButton, Box, Button } from "@mui/material";
 import Axios from "axios";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
-import ModalPost from "../../components/ModalPost";
-import { Link, Outlet, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
 import { actionCreators } from "../../store/index";
@@ -126,8 +125,6 @@ export default function Admin() {
           <AddCircleIcon color="primary" sx={{ fontSize: 50 }} />
         </IconButton>
       </Link>
-
-      <Outlet />
 
       {/* MODAL VIEW */}
       <Modal

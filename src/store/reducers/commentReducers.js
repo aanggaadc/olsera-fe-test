@@ -1,12 +1,14 @@
-const reducer = (state = [], action) => {
+const reducer = (state = {
+    data: []
+}, action) => {
     switch (action.type) {
         case "fillComment":
             return {
-                state: action.payload
+                data: action.payload
             }
         case "clearComment":
             return {
-                state : []
+                data : []
             }
         default:
         return state

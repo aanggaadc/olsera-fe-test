@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Outlet, useLocation } from 'react-router-dom'
 import NavbarMain from '../../components/NavbarMain';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import './Home.css'
@@ -14,6 +14,7 @@ import { actionCreators } from "../../store/index";
 
 export default function Home() {
     const dispatch = useDispatch();
+    const location = useLocation()
     const [posts, setPosts] = useState([])
     const [isLoading, setIsLoading] = useState(false)
     const [hasMore, setHasMore] = useState(true)
@@ -106,7 +107,9 @@ export default function Home() {
                     index + 1 === posts.length ? (
                         <Card reference={lastItemRef} key={index}>
                             <div className='content'>
-                                <Link style={{ textDecoration: "none" }} to={`/posts/${item.id}`}>
+                                <Link style={{ textDecoration: "none" }}
+                                    to={`/posts/${item.id}`}
+                                    state={{ background: location }}>
                                     <h4 style={{ cursor: "pointer" }} onClick={() => {
                                         setPostData(item)
                                         getComment(item.id)
@@ -125,13 +128,17 @@ export default function Home() {
                     ) : (
                         <Card key={index}>
                             <div className='content'>
-                                <Link style={{ textDecoration: "none" }} to={`/posts/${item.id}`}>
+                                <Link style={{ textDecoration: "none" }}
+                                    to={`/posts/${item.id}`}
+                                    state={{ background: location }}>
                                     <h4 style={{ cursor: "pointer" }} onClick={() => {
                                         setPostData(item)
                                         getComment(item.id)
                                     }}>{item.title}</h4>
                                 </Link>
                                 <p>{item.body}</p>
+                                <Outlet />
+
                             </div>
                             <IconButton onClick={() => {
                                 likePost(item.id, item.title, item.body)
@@ -145,6 +152,7 @@ export default function Home() {
 
                 {isLoading && <Loader />}
             </div>
+
         </>
     )
 }
