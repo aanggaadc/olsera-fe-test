@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react'
-import { Link, Outlet, useLocation } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import NavbarMain from '../../components/NavbarMain';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import './Home.css'
 import { IconButton } from '@mui/material';
 import Axios from 'axios'
@@ -22,6 +23,7 @@ export default function Home({ getComment }) {
     const observer = useRef()
     const TOTAL_PAGES = 10
     const { setPostData } = bindActionCreators(actionCreators, dispatch);
+    const likedPosts = JSON.parse(localStorage.getItem('likedPost'))
 
     const Card = ({ children, reference }) => {
         return (
@@ -72,22 +74,20 @@ export default function Home({ getComment }) {
     }
 
     const likePost = (id, title, body) => {
-        if (localStorage.getItem('likedPost') === null) {
-            localStorage.setItem('likedPost', '[]')
-        }
         const newLike = {
             id: id,
             title: title,
             body: body,
         }
-
         const dataLike = JSON.parse(localStorage.getItem('likedPost'))
         dataLike.push(newLike)
-
         localStorage.setItem('likedPost', JSON.stringify(dataLike))
     }
 
     useEffect(() => {
+        if (localStorage.getItem('likedPost') === null) {
+            localStorage.setItem('likedPost', '[]')
+        }
         getPosts(pages)
         setPages((pages) => pages + 1)
     }, [])
@@ -110,14 +110,17 @@ export default function Home({ getComment }) {
                                 </Link>
                                 <p>{item.body}</p>
                             </div>
-                            <IconButton onClick={() => {
-                                likePost(item.id, item.title, item.body)
-                                toast.success(`You like ${item.title} posts`)
-                            }}>
-                                <FavoriteIcon sx={{ fontSize: 35, color: "pink" }} />
+                            <IconButton disabled={likedPosts.find(post => post.id === item.id)}
+                                onClick={() => {
+                                    likePost(item.id, item.title, item.body)
+                                    toast.success(`You like ${item.title} posts`)
+                                }}>
+                                {likedPosts.find(post => post.id === item.id) ?
+                                    <CheckCircleIcon sx={{ fontSize: 35, color: "pink" }} /> :
+                                    <FavoriteIcon sx={{ fontSize: 35, color: "pink" }} />
+                                }
                             </IconButton>
                         </Card>
-
                     ) : (
                         <Card key={index}>
                             <div className='content'>
@@ -130,14 +133,16 @@ export default function Home({ getComment }) {
                                     }}>{item.title}</h4>
                                 </Link>
                                 <p>{item.body}</p>
-                                <Outlet />
-
                             </div>
-                            <IconButton onClick={() => {
-                                likePost(item.id, item.title, item.body)
-                                toast.success(`You like ${item.title} posts`)
-                            }}>
-                                <FavoriteIcon sx={{ fontSize: 35, color: "pink" }} />
+                            <IconButton disabled={likedPosts.find(post => post.id === item.id)}
+                                onClick={() => {
+                                    likePost(item.id, item.title, item.body)
+                                    toast.success(`You like ${item.title} posts`)
+                                }}>
+                                {likedPosts.find(post => post.id === item.id) ?
+                                    <CheckCircleIcon sx={{ fontSize: 35, color: "pink" }} /> :
+                                    <FavoriteIcon sx={{ fontSize: 35, color: "pink" }} />
+                                }
                             </IconButton>
                         </Card>
                     )

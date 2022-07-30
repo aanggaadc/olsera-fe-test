@@ -4,7 +4,7 @@ import { toast } from 'react-toastify'
 import MenuIcon from '@mui/icons-material/Menu';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import { Link, useLocation } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { Button, AppBar, Box, Toolbar, Typography, IconButton } from '@mui/material';
 import { useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -12,7 +12,6 @@ import { actionCreators } from "../store/index";
 
 export default function NavbarMain({ title }) {
     const navigate = useNavigate()
-    const location = useLocation()
     const authData = localStorage.getItem('authData')
     const dispatch = useDispatch();
     const { clearUser } = bindActionCreators(actionCreators, dispatch);

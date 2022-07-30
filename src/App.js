@@ -25,7 +25,7 @@ function App() {
         .then(response => {
             setCommentData(response.data)
         })
-}
+  }
   
   useLayoutEffect(() => {
     if(localStorage.getItem("authData")) {

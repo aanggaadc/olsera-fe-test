@@ -11,7 +11,7 @@ import {
     IconButton
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import { useNavigate, useLocation, useParams } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { Formik, Form } from 'formik'
 import { useDispatch, useSelector } from "react-redux";
 import { bindActionCreators } from "redux";
