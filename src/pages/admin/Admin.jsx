@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import NavbarMain from "../../components/NavbarMain";
+import Card from '../../components/Card'
 import ModalDelete from '../../components/ModalDelete'
 import { IconButton, Button } from "@mui/material";
 import Axios from "axios";
@@ -22,10 +23,6 @@ export default function Admin({ getComment }) {
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const handleOpenDeleteModal = () => setOpenDeleteModal(true);
   const handleCloseDeleteModal = () => setOpenDeleteModal(false);
-
-  const Card = ({ children }) => {
-    return <div className="card-post">{children}</div>;
-  };
 
   const getPosts = async (page) => {
     await new Promise((resolve) => setTimeout(resolve, 1000));

@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import NavbarMain from '../../components/NavbarMain';
+import Card from '../../components/Card'
+import Loader from '../../components/Loader'
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import './Home.css'
 import { IconButton } from '@mui/material';
 import Axios from 'axios'
-import CircularProgress from '@mui/material/CircularProgress';
-import Box from '@mui/material/Box';
 import { toast } from 'react-toastify'
 import { useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -24,22 +24,6 @@ export default function Home({ getComment }) {
     const TOTAL_PAGES = 10
     const { setPostData } = bindActionCreators(actionCreators, dispatch);
     const likedPosts = JSON.parse(localStorage.getItem('likedPost'))
-
-    const Card = ({ children, reference }) => {
-        return (
-            <div className='card-post' ref={reference}>
-                {children}
-            </div>
-        );
-    };
-
-    const Loader = () => {
-        return (
-            <Box sx={{ display: 'flex', justifyContent: "center", alignItems: "center" }}>
-                <CircularProgress />
-            </Box>
-        )
-    }
 
     const lastItemRef = useCallback(
         (node) => {
