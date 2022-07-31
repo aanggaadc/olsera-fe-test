@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 import NavbarMain from "../../components/NavbarMain";
 import Card from '../../components/Card'
 import ModalDelete from '../../components/ModalDelete'
-import { IconButton, Button } from "@mui/material";
+import { IconButton } from "@mui/material";
 import Axios from "axios";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { Link, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -65,23 +67,19 @@ export default function Admin({ getComment }) {
                 to={`/admin/posts/${item.id}/edit`}
                 state={{ background: location }}
               >
-                <Button
-                  variant="contained"
-                  color="primary"
+                <IconButton
                   onClick={() => {
                     setPostData(item)
                   }}
                 >
-                  Edit
-                </Button>
+                  <EditIcon sx={{ fontSize: 35, color: "blue" }} />
+                </IconButton>
               </Link>
-              <Button
-                sx={{ backgroundColor: "red" }}
-                variant="contained"
+              <IconButton
                 onClick={handleOpenDeleteModal}
               >
-                Delete
-              </Button>
+                <DeleteIcon sx={{ fontSize: 35, color: "red" }} />
+              </IconButton>
             </div>
           </Card>
         ))}
