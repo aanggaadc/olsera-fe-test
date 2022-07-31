@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import NavbarMain from '../../components/NavbarMain';
 import Card from '../../components/Card'
@@ -10,26 +10,24 @@ import { actionCreators } from "../../store/index";
 import { toast } from 'react-toastify'
 
 export default function LikedPosts({ getComment }) {
-    const location = useLocation()
     const posts = JSON.parse(localStorage.getItem('likedPost'))
+    const [likePosts, setLikePosts] = useState(posts)
     const dispatch = useDispatch()
+    const location = useLocation()
     const { setPostData } = bindActionCreators(actionCreators, dispatch);
 
     const unlikePost = (id, title) => {
         const filterPost = posts.filter(item => item.id !== id)
         localStorage.setItem('likedPost', JSON.stringify(filterPost))
-        toast.success(`Successfully unlike ${title} posts`, {
-            onClose: () => setTimeout(() => {
-                window.location.reload()
-            }, 3000)
-        })
+        setLikePosts(filterPost)
+        toast.success(`Successfully unlike ${title} posts`)
     }
 
     return (
         <>
             <NavbarMain title="Liked Posts" />
             <div className='home-container'>
-                {posts ? posts.map((item, index) =>
+                {likePosts.length !== 0 ? likePosts.map((item, index) =>
                     <Card key={index}>
                         <div className='content'>
                             <Link style={{ textDecoration: "none" }}

@@ -69,9 +69,6 @@ export default function Home({ getComment }) {
     }
 
     useEffect(() => {
-        if (localStorage.getItem('likedPost') === null) {
-            localStorage.setItem('likedPost', '[]')
-        }
         getPosts(pages)
         setPages((pages) => pages + 1)
     }, [])

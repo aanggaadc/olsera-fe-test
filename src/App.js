@@ -1,5 +1,5 @@
 import "react-toastify/dist/ReactToastify.css"
-import { useLayoutEffect } from "react"
+import { useLayoutEffect, useEffect } from "react"
 import {Routes, Route, useLocation} from 'react-router-dom'
 import Home from './pages/home/Home'
 import Login from './pages/login/Login'
@@ -26,6 +26,12 @@ function App() {
             setCommentData(response.data)
         })
   }
+
+  useEffect(() => {
+    if (localStorage.getItem('likedPost') === null) {
+      localStorage.setItem('likedPost', '[]')
+  }
+  },[])
   
   useLayoutEffect(() => {
     if(localStorage.getItem("authData")) {
